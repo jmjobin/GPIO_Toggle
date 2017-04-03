@@ -1,16 +1,27 @@
 package com.example.jmj.gpio_toggle;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
 import android.widget.Toast;
+import android.hardware.Sensor.*;
 
 
 import net.calit2.mooc.iot_db410c.db410c_gpiolib.GpioProcessor;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+    private SensorManager mSensorManager;
+    private Sensor mHumiditySensor;
+    private Sensor mTemperatureSensor;
+    private boolean isTemperatureSensorPresent;
 
     private Button buttonPin24;
     private Button buttonPin30;
@@ -54,6 +65,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("DRAGONBOARD MEZZANINE VersC GPIO Set/Reset v0.2");
+
+        mSensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
+
+        if(mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null) {
+            mTemperatureSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+            isTemperatureSensorPresent = true;
+            Toast.makeText(this, "Temperature sensor is present", Toast.LENGTH_LONG).show();
+        } else {
+            isTemperatureSensorPresent = false;
+            Toast.makeText(this, "No Temperature sensor", Toast.LENGTH_LONG).show();
+        }
+
+
 
         uart1Access.sendMessage("\n" + getTitle() + "\n");//send the hello message
 
@@ -360,6 +384,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 }

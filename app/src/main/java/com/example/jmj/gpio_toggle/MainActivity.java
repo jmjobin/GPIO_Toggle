@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("DRAGONBOARD MEZZANINE VersC GPIO Set/Reset v0.1");
+        setTitle("DRAGONBOARD MEZZANINE VersC GPIO Set/Reset v0.2");
 
         uart1Access.sendMessage("\n" + getTitle() + "\n");//send the hello message
 

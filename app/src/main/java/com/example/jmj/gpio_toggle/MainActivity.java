@@ -16,12 +16,15 @@ import android.hardware.Sensor.*;
 
 import net.calit2.mooc.iot_db410c.db410c_gpiolib.GpioProcessor;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor mHumiditySensor;
     private Sensor mTemperatureSensor;
     private boolean isTemperatureSensorPresent;
+    List<Sensor> sensors;
 
     private Button buttonPin24;
     private Button buttonPin30;
@@ -68,15 +71,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         mSensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
 
-        if(mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null) {
-            mTemperatureSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
-            isTemperatureSensorPresent = true;
-            Toast.makeText(this, "Temperature sensor is present", Toast.LENGTH_LONG).show();
-        } else {
-            isTemperatureSensorPresent = false;
-            Toast.makeText(this, "No Temperature sensor", Toast.LENGTH_LONG).show();
-        }
-
+        sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
 
 
         uart1Access.sendMessage("\n" + getTitle() + "\n");//send the hello message

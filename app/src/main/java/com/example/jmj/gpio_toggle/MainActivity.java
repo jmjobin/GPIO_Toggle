@@ -8,8 +8,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.hardware.Sensor.*;
 
@@ -21,10 +23,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
-    private Sensor mHumiditySensor;
-    private Sensor mTemperatureSensor;
-    private boolean isTemperatureSensorPresent;
-    List<Sensor> sensors;
 
     private Button buttonPin24;
     private Button buttonPin30;
@@ -67,11 +65,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        List<Sensor> sensors;
+        ListView lv;
+
         setTitle("DRAGONBOARD MEZZANINE VersC GPIO Set/Reset v0.2");
 
         mSensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
 
         sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+        lv = (ListView) findViewById (R.id.sensorslist);
+
+        ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.activity_listview, sensors);
+        lv.setAdapter(adapter);
+
 
 
         uart1Access.sendMessage("\n" + getTitle() + "\n");//send the hello message

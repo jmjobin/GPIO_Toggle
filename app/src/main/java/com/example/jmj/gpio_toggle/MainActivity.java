@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager mSensorManager;
 
+
     private Button buttonPin24;
     private Button buttonPin30;
     private Button buttonPin32;

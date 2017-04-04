@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(DRAGONBOARD_FLG) {
             led24.out();
             led24.low();
-            led30.out();
-            led30.low();
+            //led30.out();
+            //led30.low();
             led32.out();
             led32.low();
             led34.out();
@@ -114,13 +114,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
 
         buttonPin30 = (Button) findViewById(R.id.button_pin_30);
-
+/*
         buttonPin30.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 buttonChangeState(30);
             }
         });
-
+*/
         buttonPin32 = (Button) findViewById(R.id.button_pin_32);
 
         buttonPin32.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
-
+/*
             case 30:
                 if (!pin30) {
                     //Toast.makeText(this, "Pin 30 ON", Toast.LENGTH_SHORT).show();
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
-
+*/
             case 32:
                 if (!pin32) {
                     //Toast.makeText(this, "Pin 32 ON", Toast.LENGTH_SHORT).show();

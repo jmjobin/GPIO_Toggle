@@ -18,11 +18,9 @@ import java.io.IOException;
 
 public class Uart1Access {
     public static final String TAG = "Uart1Access";
-<<<<<<< HEAD
+
     private String PATH = "/dev/ttyHS4";
-=======
-    private String PATH = "/dev/ttyHSL0";
->>>>>>> remotes/origin/GPIO_Toggle
+
 
     /* Sending a message to the port */
     public void sendMessage(String message) {

@@ -1,18 +1,21 @@
 package com.example.jmj.gpio_toggle;
 
-<<<<<<< HEAD
+
 import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.hardware.Sensor.*;
 
@@ -25,34 +28,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private SensorManager mSensorManager;
 
-
-    private Button buttonPin24;
-    private Button buttonPin30;
-=======
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.view.View;
-import android.widget.Toast;
-import android.widget.TextView;
-
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import net.calit2.mooc.iot_db410c.db410c_gpiolib.GpioProcessor;
-
-public class MainActivity extends AppCompatActivity {
-
     private Button buttonPin24;
     private Button buttonPin30;//to eliminate
->>>>>>> remotes/origin/GPIO_Toggle
     private Button buttonPin32;
     private Button buttonPin34;
     private Button buttonPin23;
@@ -62,11 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonPin33;
 
     boolean pin24 = false;
-<<<<<<< HEAD
-    boolean pin30 = false;
-=======
     boolean pin30 = false;//to eliminate
->>>>>>> remotes/origin/GPIO_Toggle
     boolean pin32 = false;
     boolean pin34 = false;
     boolean pin23 = false;
@@ -75,21 +48,17 @@ public class MainActivity extends AppCompatActivity {
     boolean pin31 = false;
     boolean pin33 = false;
 
-<<<<<<< HEAD
-=======
     private TextView serialText;
 
->>>>>>> remotes/origin/GPIO_Toggle
-    private static boolean DRAGONBOARD_FLG = true;//false runs on the phone or simulator (do nothing on GPIO)
+
+    private static boolean DRAGONBOARD_FLG = false;//false runs on the phone or simulator (do nothing on GPIO)
 
     GpioProcessor gpioProcessor = new GpioProcessor();
 
     GpioProcessor.Gpio led24 = gpioProcessor.getPin24();
-<<<<<<< HEAD
-    GpioProcessor.Gpio led30 = gpioProcessor.getPin30();
-=======
+
     GpioProcessor.Gpio led30 = gpioProcessor.getPin30();//to eliminate
->>>>>>> remotes/origin/GPIO_Toggle
+
     GpioProcessor.Gpio led32 = gpioProcessor.getPin32();
     GpioProcessor.Gpio led34 = gpioProcessor.getPin34();
     GpioProcessor.Gpio led23 = gpioProcessor.getPin23();
@@ -98,10 +67,7 @@ public class MainActivity extends AppCompatActivity {
     GpioProcessor.Gpio led31 = gpioProcessor.getPin31();
     GpioProcessor.Gpio led33 = gpioProcessor.getPin33();
 
-<<<<<<< HEAD
-    Uart1Access uart1Access = new Uart1Access();
 
-=======
     Uart0Access uart0Access = new Uart0Access();
     Uart1Access uart1Access = new Uart1Access();
 
@@ -109,19 +75,15 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     Handler handler;
     private Runnable r;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
->>>>>>> remotes/origin/GPIO_Toggle
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+
         List<Sensor> sensors;
         ListView lv;
 
@@ -130,249 +92,175 @@ public class MainActivity extends AppCompatActivity {
         mSensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
 
         sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-        lv = (ListView) findViewById (R.id.sensorslist);
+        lv = (ListView) findViewById(R.id.sensorslist);
 
         ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.activity_listview, sensors);
         lv.setAdapter(adapter);
 
 
-
         uart1Access.sendMessage("\n" + getTitle() + "\n");//send the hello message
 
-        //initialise available pins
-        if(DRAGONBOARD_FLG) {
-            led24.out();
-            led24.low();
-            //led30.out();
-            //led30.low();
-=======
-        setTitle("DRAGONBOARD MEZZANINE VersC GPIO Set/Reset v0.1");
+            setTitle("DRAGONBOARD MEZZANINE VersC GPIO Set/Reset v0.1");
 
-        serialText = (TextView) findViewById(R.id.SerialData);
+            //serialText = (TextView) findViewById(R.id.SerialData);
 
-        //uart0Access.sendMessage("OK\n");
-        uart1Access.sendMessage("\n" + getTitle() + "\n");//send the hello message
+            //uart0Access.sendMessage("OK\n");
+            uart1Access.sendMessage("\n" + getTitle() + "\n");//send the hello message
 
-        //initialise available pins
-        if (DRAGONBOARD_FLG) {
-            led24.out();
-            led24.low();
-            led30.out();//to eliminate
-            led30.low();//to eliminate
->>>>>>> remotes/origin/GPIO_Toggle
-            led32.out();
-            led32.low();
-            led34.out();
-            led34.low();
-            led23.out();
-            led23.low();
-            led27.out();
-            led27.low();
-            led29.out();
-            led29.low();
-            led31.out();
-            led31.low();
-            led33.out();
-            led33.low();
-        }
+            //initialise available pins
+            if (DRAGONBOARD_FLG) {
+                led24.out();
+                led24.low();
+                led30.out();//to eliminate
+                led30.low();//to eliminate
 
-        // Initialize the pin button with a listener that click events
-        buttonPin24 = (Button) findViewById(R.id.button_pin_24);
-
-        buttonPin24.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(24);
+                led32.out();
+                led32.low();
+                led34.out();
+                led34.low();
+                led23.out();
+                led23.low();
+                led27.out();
+                led27.low();
+                led29.out();
+                led29.low();
+                led31.out();
+                led31.low();
+                led33.out();
+                led33.low();
             }
-        });
 
-<<<<<<< HEAD
-        buttonPin30 = (Button) findViewById(R.id.button_pin_30);
-/*
-=======
-        buttonPin30 = (Button) findViewById(R.id.button_pin_30);//to eliminate
+            // Initialize the pin button with a listener that click events
+            buttonPin24 = (Button) findViewById(R.id.button_pin_24);
 
->>>>>>> remotes/origin/GPIO_Toggle
-        buttonPin30.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(30);
-            }
-        });
-<<<<<<< HEAD
-*/
-=======
-
->>>>>>> remotes/origin/GPIO_Toggle
-        buttonPin32 = (Button) findViewById(R.id.button_pin_32);
-
-        buttonPin32.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(32);
-            }
-        });
-
-        buttonPin34 = (Button) findViewById(R.id.button_pin_34);
-
-        buttonPin34.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(34);
-            }
-        });
-
-        buttonPin23 = (Button) findViewById(R.id.button_pin_23);
-
-        buttonPin23.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(23);
-            }
-        });
-
-        buttonPin27 = (Button) findViewById(R.id.button_pin_27);
-
-        buttonPin27.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(27);
-            }
-        });
-
-        buttonPin29 = (Button) findViewById(R.id.button_pin_29);
-
-        buttonPin29.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(29);
-            }
-        });
-
-        buttonPin31 = (Button) findViewById(R.id.button_pin_31);
-
-        buttonPin31.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(31);
-            }
-        });
-
-        buttonPin33 = (Button) findViewById(R.id.button_pin_33);
-
-        buttonPin33.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                buttonChangeState(33);
-            }
-        });
-
-<<<<<<< HEAD
-        try{
-            Thread.sleep(500);
-        }catch (InterruptedException e) {
-=======
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
->>>>>>> remotes/origin/GPIO_Toggle
-            e.printStackTrace();
-        }
-
-        buttonChangeState(34);
-<<<<<<< HEAD
-        try{
-            Thread.sleep(500);
-        }catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        buttonChangeState(34);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run(){
-
-                while(true) {
-                    uart1Access.sendMessage("hello");
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    //String message = uart1Access.readMessage();
-
+            buttonPin24.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(24);
                 }
+            });
 
-            }
-        }).start();
-=======
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        String message = "hello";
-        Log.v(TAG, message);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            buttonPin32 = (Button) findViewById(R.id.button_pin_32);
 
-        for(int i = 0; i < 100; i++) {
-            message = uart0Access.readMessage();
-            Log.v(TAG, message);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+            buttonPin32.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(32);
+                }
+            });
 
-        handler = new Handler();
+            buttonPin34 = (Button) findViewById(R.id.button_pin_34);
 
-        r = new Runnable() {
-            @Override
-            public void run() {
+            buttonPin34.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(34);
+                }
+            });
 
-                runOnUiThread(new Runnable() {
+            buttonPin23 = (Button) findViewById(R.id.button_pin_23);
+
+            buttonPin23.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(23);
+                }
+            });
+
+            buttonPin27 = (Button) findViewById(R.id.button_pin_27);
+
+            buttonPin27.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(27);
+                }
+            });
+
+            buttonPin29 = (Button) findViewById(R.id.button_pin_29);
+
+            buttonPin29.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(29);
+                }
+            });
+
+            buttonPin31 = (Button) findViewById(R.id.button_pin_31);
+
+            buttonPin31.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(31);
+                }
+            });
+
+            buttonPin33 = (Button) findViewById(R.id.button_pin_33);
+
+            buttonPin33.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    buttonChangeState(33);
+                }
+            });
+
+
+
+                new Thread(new Runnable() {
+                    @Override
                     public void run() {
-                        Log.v(TAG, "Entering thread" + count);
-                        String message = String.valueOf(count);
-                        try {
-                                message = uart0Access.readMessage();
-                        }catch(Exception e) {
-                            e.printStackTrace();
-                        }
-                        //String message = String.valueOf(count);
-                        count = count + 1;
 
-                        //serialText.setText(String.valueOf(count));
-                        if(message != null) serialText.setText(message);
+                        while (true) {
+                            uart1Access.sendMessage("hello");
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
 
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            //String message = uart1Access.readMessage();
+
                         }
+
                     }
+                }).start();
 
-                });
-                handler.postDelayed(this, 100);
-            }
-        };
-        // this tells Java to run "r"
-        handler.postDelayed(r, 100);
+/*
+                handler = new Handler();
 
->>>>>>> remotes/origin/GPIO_Toggle
+                r = new Runnable() {
+                    @Override
+                    public void run() {
 
-    }
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Log.v(TAG, "Entering thread" + count);
+                                String message = String.valueOf(count);
+                                try {
+                                    message = uart0Access.readMessage();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                //String message = String.valueOf(count);
+                                count = count + 1;
+
+                                //serialText.setText(String.valueOf(count));
+                                if (message != null) serialText.setText(message);
+
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        });
+                        handler.postDelayed(this, 100);
+                    }
+                };
+                // this tells Java to run "r"
+                handler.postDelayed(r, 100);
+      */
 
 
-<<<<<<< HEAD
-    private void buttonChangeState(int pin)
-    {
+        }
 
-        switch(pin) {
-=======
+
     private void buttonChangeState(int pin) {
 
         switch (pin) {
->>>>>>> remotes/origin/GPIO_Toggle
 
             case 24:
                 if (!pin24) {
@@ -380,89 +268,69 @@ public class MainActivity extends AppCompatActivity {
                     pin24 = true;
                     buttonPin24.setTextColor(Color.WHITE);
                     buttonPin24.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led24.high();
-=======
+
                     if (DRAGONBOARD_FLG) led24.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "Pin 24 OFF", Toast.LENGTH_SHORT).show();
                     pin24 = false;
                     buttonPin24.setTextColor(Color.BLUE);
                     buttonPin24.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led24.low();
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
-/*
-            case 30:
-=======
-                    if (DRAGONBOARD_FLG) led24.low();
-                    uart1Access.sendMessage("pin " + pin + " OFF\n");
-                }
-                break;
 
+/*
             case 30://to eliminate
->>>>>>> remotes/origin/GPIO_Toggle
+
                 if (!pin30) {
                     //Toast.makeText(this, "Pin 30 ON", Toast.LENGTH_SHORT).show();
                     pin30 = true;
                     buttonPin30.setTextColor(Color.WHITE);
                     buttonPin30.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led30.high();
-=======
+
                     if (DRAGONBOARD_FLG) led30.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "Pin 30 OFF", Toast.LENGTH_SHORT).show();
                     pin30 = false;
                     buttonPin30.setTextColor(Color.BLUE);
                     buttonPin30.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led30.low();
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
 */
-=======
-                    if (DRAGONBOARD_FLG) led30.low();
-                    uart1Access.sendMessage("pin " + pin + " OFF\n");
-                }
-                break;
 
->>>>>>> remotes/origin/GPIO_Toggle
             case 32:
                 if (!pin32) {
                     //Toast.makeText(this, "Pin 32 ON", Toast.LENGTH_SHORT).show();
                     pin32 = true;
                     buttonPin32.setTextColor(Color.WHITE);
                     buttonPin32.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led32.high();
-                    uart1Access.sendMessage("pin " + pin + " ON\n");
-            } else {
-=======
+
                     if (DRAGONBOARD_FLG) led32.high();
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
->>>>>>> remotes/origin/GPIO_Toggle
+
                     //Toast.makeText(this, "Pin 32 OFF", Toast.LENGTH_SHORT).show();
                     pin32 = false;
                     buttonPin32.setTextColor(Color.BLUE);
                     buttonPin32.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led32.low();
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
             }
-=======
-                    if (DRAGONBOARD_FLG) led32.low();
-                    uart1Access.sendMessage("pin " + pin + " OFF\n");
-                }
->>>>>>> remotes/origin/GPIO_Toggle
+
                 break;
 
             case 34:
@@ -471,22 +339,20 @@ public class MainActivity extends AppCompatActivity {
                     pin34 = true;
                     buttonPin34.setTextColor(Color.WHITE);
                     buttonPin34.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led34.high();
-=======
+
+
+
                     if (DRAGONBOARD_FLG) led34.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "pin 34 OFF", Toast.LENGTH_SHORT).show();
                     pin34 = false;
                     buttonPin34.setTextColor(Color.BLUE);
                     buttonPin34.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led34.low();
-=======
-                    if (DRAGONBOARD_FLG) led34.low();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
@@ -497,22 +363,20 @@ public class MainActivity extends AppCompatActivity {
                     pin23 = true;
                     buttonPin23.setTextColor(Color.WHITE);
                     buttonPin23.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led23.high();
-=======
-                    if (DRAGONBOARD_FLG) led23.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
+
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "pin 23 OFF", Toast.LENGTH_SHORT).show();
                     pin23 = false;
                     buttonPin23.setTextColor(Color.BLUE);
                     buttonPin23.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led23.low();
-=======
+
                     if (DRAGONBOARD_FLG) led23.low();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
@@ -523,22 +387,22 @@ public class MainActivity extends AppCompatActivity {
                     pin27 = true;
                     buttonPin27.setTextColor(Color.WHITE);
                     buttonPin27.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led27.high();
-=======
+
+
+
                     if (DRAGONBOARD_FLG) led27.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "pin 27 OFF", Toast.LENGTH_SHORT).show();
                     pin27 = false;
                     buttonPin27.setTextColor(Color.BLUE);
                     buttonPin27.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led27.low();
-=======
+
+
+
                     if (DRAGONBOARD_FLG) led27.low();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
@@ -549,22 +413,19 @@ public class MainActivity extends AppCompatActivity {
                     pin29 = true;
                     buttonPin29.setTextColor(Color.WHITE);
                     buttonPin29.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led29.high();
-=======
+
                     if (DRAGONBOARD_FLG) led29.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "pin 29 OFF", Toast.LENGTH_SHORT).show();
                     pin29 = false;
                     buttonPin29.setTextColor(Color.BLUE);
                     buttonPin29.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led29.low();
-=======
+
+
                     if (DRAGONBOARD_FLG) led29.low();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
@@ -575,22 +436,21 @@ public class MainActivity extends AppCompatActivity {
                     pin31 = true;
                     buttonPin31.setTextColor(Color.WHITE);
                     buttonPin31.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led31.high();
-=======
+
+
                     if (DRAGONBOARD_FLG) led31.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "pin 31 OFF", Toast.LENGTH_SHORT).show();
                     pin31 = false;
                     buttonPin31.setTextColor(Color.BLUE);
                     buttonPin31.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led31.low();
-=======
+
+
+
                     if (DRAGONBOARD_FLG) led31.low();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
@@ -601,22 +461,19 @@ public class MainActivity extends AppCompatActivity {
                     pin33 = true;
                     buttonPin33.setTextColor(Color.WHITE);
                     buttonPin33.setBackgroundResource(R.drawable.roundedbutton_on);
-<<<<<<< HEAD
-                    if(DRAGONBOARD_FLG) led33.high();
-=======
+
                     if (DRAGONBOARD_FLG) led33.high();
->>>>>>> remotes/origin/GPIO_Toggle
+
                     uart1Access.sendMessage("pin " + pin + " ON\n");
                 } else {
                     //Toast.makeText(this, "pin 33 OFF", Toast.LENGTH_SHORT).show();
                     pin33 = false;
                     buttonPin33.setTextColor(Color.BLUE);
                     buttonPin33.setBackgroundResource(R.drawable.roundedbutton_off);
-<<<<<<< HEAD
+
                     if(DRAGONBOARD_FLG) led33.low();
-=======
-                    if (DRAGONBOARD_FLG) led33.low();
->>>>>>> remotes/origin/GPIO_Toggle
+
+
                     uart1Access.sendMessage("pin " + pin + " OFF\n");
                 }
                 break;
@@ -628,7 +485,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
+
     @Override
     public void onSensorChanged(SensorEvent event) {
 
@@ -637,42 +494,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-=======
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
->>>>>>> remotes/origin/GPIO_Toggle
+
+
     }
 }
 

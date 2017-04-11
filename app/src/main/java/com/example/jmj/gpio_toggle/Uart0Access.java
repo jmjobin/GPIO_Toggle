@@ -16,13 +16,9 @@ import java.io.IOException;
  * Created by jean-marc on 27-Sep-16.
  */
 
-public class Uart1Access {
-    public static final String TAG = "Uart1Access";
-<<<<<<< HEAD
-    private String PATH = "/dev/ttyHS4";
-=======
-    private String PATH = "/dev/ttyHSL0";
->>>>>>> remotes/origin/GPIO_Toggle
+public class Uart0Access {
+    public static final String TAG = "Uart0Access";
+    private String PATH = "/dev/ttyHS0";
 
     /* Sending a message to the port */
     public void sendMessage(String message) {
